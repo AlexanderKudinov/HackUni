@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.RegistrationActivity">
+
+    <EditText
+        android:id="@+id/editText_email_registration"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/editText_password_registration"
+        android:layout_centerHorizontal="true"
+        android:inputType="textEmailAddress"
+        android:hint="email"/>
+
+    <EditText
+        android:id="@+id/editText_password_registration"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/editText_role_registration"
+        android:layout_centerHorizontal="true"
+        android:inputType="textPassword"
+        android:hint="Пароль"/>
+
+    <EditText
+        android:id="@+id/editText_role_registration"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/editText_username_registration"
+        android:hint="Роль"/>
+
+    <EditText
+        android:id="@+id/editText_username_registration"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:hint="Имя"/>
+
+    <EditText
+        android:id="@+id/editText_price_registration"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editText_username_registration"
+        android:layout_centerHorizontal="true"
+        android:inputType="number"
+        android:hint="Стоимость услуги"/>
+
+    <EditText
+        android:id="@+id/editText_desription_registration"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editText_price_registration"
+        android:layout_centerHorizontal="true"
+        android:hint="Добавить описание"/>
+
+    <Button
+        android:id="@+id/btnRegistration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Регистрация"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/editText_desription_registration"/>
+
+
+    <TextView
+        android:id="@+id/textView_goToEntrance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnRegistration"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/blue"
+        android:text="@string/turnBack"/>
+
+
+
+
+</RelativeLayout>

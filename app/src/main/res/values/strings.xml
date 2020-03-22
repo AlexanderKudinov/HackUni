@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Party Maker</string>
+    <string name="entrance">Вход</string>
+    <string name="menu">Меню</string>
+    <string name="events">Мероприятия</string>
+    <string name="search">Поиск</string>
+    <string name="create">Создать</string>
+    <string name="cancel">Отмена</string>
+    <string name="people">Люди</string>
+    <string name="notRegistered"><u>Не зарегистрированы?</u></string>
+    <string name="turnBack"><u>Вернуться назад</u></string>
+</resources>
