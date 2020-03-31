@@ -36,7 +36,7 @@ public class EventActivity extends AppCompatActivity {
         adapter.addFragment(new AnimatorPeopleFragment());
         adapter.addFragment(new CookerPeopleFragment());
         adapter.addFragment(new DancerPeopleFragment());
-        viewPager = new ViewPager(this);
+        viewPager = findViewById(R.id.viewPager_addingEvent);
         viewPager.setAdapter(adapter);
     }
 

@@ -42,7 +42,7 @@ public class RetrofitTransactions {
 
     public void checkTransactionsDone() {
         amountTransactions++;
-        if (amountTransactions == 5)
+        if (amountTransactions % 5 == 0)
             AllPeopleLiveData.getInstance().setLiveData(AllPeopleLiveData.PEOPLE_SUCCESS);
     }
 
@@ -59,16 +59,16 @@ public class RetrofitTransactions {
             @Override
             public void onResponse(Call<ArrayList<Person>> call, Response<ArrayList<Person>> response) {
                 if (response.isSuccessful()) {
-                    Log.d("retrofittt","success");
+                    Log.d("retrofit","success");
                     checkTransactionsDone();
                     AllPeopleLiveData.getInstance().setAllPeople(response.body());
                 }
                 else {
                     try {
                         AllPeopleLiveData.getInstance().setLiveData(AllPeopleLiveData.PEOPLE_FAILURE);
-                        Log.d("retrofittt", response.errorBody().string());
-                        Log.d("retrofittt", response.message());
-                        Log.d("retrofittt", response.code()+"");
+                        Log.d("retrofit", response.errorBody().string());
+                        Log.d("retrofit", response.message());
+                        Log.d("retrofit", response.code()+"");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -77,7 +77,6 @@ public class RetrofitTransactions {
 
             @Override
             public void onFailure(Call<ArrayList<Person>> call, Throwable t) {
-                Log.d("retrofittt", t.getMessage());
             }
         });
     }
@@ -106,22 +105,12 @@ public class RetrofitTransactions {
                         AllPeopleLiveData.getInstance().setCookerPeople(response.body());
                     else if (role.equals("Dancer"))
                         AllPeopleLiveData.getInstance().setAnimatorPeople(response.body());
-                    Log.d("retrofittt","success");
-                }
-                else {
-                    try {
-                        Log.d("retrofittt", response.errorBody().string());
-                        Log.d("retrofittt", response.message());
-                        Log.d("retrofittt", response.code()+"");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    Log.d("retrofit","success");
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<Person>> call, Throwable t) {
-                Log.d("retrofittt", t.getMessage());
             }
         });
     }
@@ -133,74 +122,50 @@ public class RetrofitTransactions {
                 .build();
         ServerApi serverApi = retrofit.create(ServerApi.class);
 
-        Call<ResponseBody> callGatAll = serverApi.login(password, email);
+        HashMap hashMap = new HashMap();
+        hashMap.put("password", password);
+        hashMap.put("email", email);
+
+        Call<ResponseBody> callGatAll = serverApi.login(hashMap);
         callGatAll.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    Log.d("retrofittt","success");
+                    Log.d("retrofit","success");
                     LoginLiveData.getInstance().setLiveData(LoginLiveData.LOGIN_SUCCESS);
                 }
                 else {
                     LoginLiveData.getInstance().setLiveData(LoginLiveData.LOGIN_FAILURE);
-                    try {
-                        Log.d("retrofittt", response.errorBody().string());
-                        Log.d("retrofittt", response.message());
-                        Log.d("retrofittt", response.code()+"");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.d("retrofittt", t.getMessage());
+                LoginLiveData.getInstance().setLiveData(LoginLiveData.LOGIN_FAILURE);
             }
         });
     }
 
     public void registrate(HashMap params) {
-        Log.d("ttttt", params.get("username").toString());
-        Log.d("ttttt", params.get("password").toString());
-        Log.d("ttttt", params.get("role").toString());
-        Log.d("ttttt", params.get("distance").toString());
-        Log.d("ttttt", params.get("description").toString());
-        Log.d("ttttt", params.get("price").toString());
-        Log.d("ttttt", params.get("email").toString());
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(URLs.HOST)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ServerApi serverApi = retrofit.create(ServerApi.class);
 
-        Log.d("tttttttttttttt", new Gson().toJson(params));
-        Call<ResponseBody> callRegistrate = serverApi.registrate(params.get("username").toString(),
-                params.get("password").toString(),
-                params.get("role").toString(), Double.valueOf(params.get("distance").toString()),
-                params.get("description").toString(), Integer.valueOf(params.get("price").toString()),
-                params.get("email").toString());
+        Call<ResponseBody> callRegistrate = serverApi.registrate(params);
         callRegistrate.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    Log.d("retrofittt", "success");
+                if (response.isSuccessful())
                     RegistrationLiveData.getInstance().setLiveData(RegistrationLiveData.REGISTRATION_SUCCESS);
-                } else {
+                else
                     RegistrationLiveData.getInstance().setLiveData(RegistrationLiveData.REGISTRATION_FAILURE);
-                    try {
-                        Log.d("retrofittt", response.errorBody().string());
-                        Log.d("retrofittt", response.message());
-                        Log.d("retrofittt", response.code() + "");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.d("retrofittt", t.getMessage());
+
             }
         });
     }

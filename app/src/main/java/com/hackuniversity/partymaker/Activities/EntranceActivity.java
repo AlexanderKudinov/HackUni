@@ -35,10 +35,16 @@ public class EntranceActivity extends AppCompatActivity {
         LoginLiveData.getInstance().getLiveData().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer mode) {
-                if (mode == LoginLiveData.LOGIN_SUCCESS)
+                if (mode == LoginLiveData.LOGIN_SUCCESS) {
+                    loadingActivity();
                     RetrofitTransactions.getInstance().getAllUsers();
+                    RetrofitTransactions.getInstance().getSpecificRole("DJ");
+                    RetrofitTransactions.getInstance().getSpecificRole("Animator");
+                    RetrofitTransactions.getInstance().getSpecificRole("Cooker");
+                    RetrofitTransactions.getInstance().getSpecificRole("Dancer");
+                }
                 else if (mode == LoginLiveData.LOGIN_FAILURE)
-                    Toast.makeText(EntranceActivity.this, "Не удалось зарегистрироваться!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EntranceActivity.this, "Не удалось войти!", Toast.LENGTH_SHORT).show();
                 if (mode != LoginLiveData.DEFAULT_MODE)
                     LoginLiveData.getInstance().setLiveData(LoginLiveData.DEFAULT_MODE);
             }
@@ -63,7 +69,14 @@ public class EntranceActivity extends AppCompatActivity {
     public void entrance() {
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        finishActivity(0);
         startActivity(intent);
+        finish();
+    }
+
+    public void loadingActivity() {
+        Intent intent = new Intent(this, WaitingActivity.class);
+        startActivityForResult(intent, 0);
     }
 
 
@@ -85,6 +98,8 @@ public class EntranceActivity extends AppCompatActivity {
     @OnClick(R.id.textView_goToRegistration)
     public void onClickGoToRegistration() {
         Intent intent = new Intent(this, RegistrationActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+        finish();
     }
 }

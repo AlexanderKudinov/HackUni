@@ -19,13 +19,8 @@ public interface ServerApi {
     public Call<ArrayList<Person>> getAll();
     @POST("get_specific_role")
     public Call<ArrayList<Person>> getSpecificRole(@Body HashMap<String, String> role);
-    @FormUrlEncoded
     @POST("login")
-    public Call<ResponseBody> login(@Field("password") String password, @Field("email") String email);
-    @FormUrlEncoded
+    public Call<ResponseBody> login(@Body HashMap hashMap);
     @POST("register")
-    public Call<ResponseBody> registrate(@Field("username") String username, @Field("password") String password,
-                                         @Field("role") String role, @Field("distance") double distance,
-                                         @Field("description") String description, @Field("price") int price,
-                                         @Field("email") String email);
+    public Call<ResponseBody> registrate(@Body HashMap hashMap);
 }

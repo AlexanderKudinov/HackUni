@@ -12,8 +12,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.RegistrationActivity"></activity>
-        <activity android:name=".Activities.EntranceActivity" />
+        <activity android:name=".Activities.WaitingActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"></activity>
+        <activity android:name=".Activities.RegistrationActivity" />
+        <activity android:name=".Activities.EntranceActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".Activities.EventActivity"
             android:screenOrientation="portrait"

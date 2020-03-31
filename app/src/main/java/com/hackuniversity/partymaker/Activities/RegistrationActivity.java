@@ -31,19 +31,19 @@ public class RegistrationActivity extends AppCompatActivity {
         RegistrationLiveData.getInstance().getLiveData().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer mode) {
-                if (mode == RegistrationLiveData.REGISTRATION_SUCCESS)
-                    RetrofitTransactions.getInstance().getAllUsers();
-                else if (mode == RegistrationLiveData.REGISTRATION_FAILURE)
-                    Toast.makeText(RegistrationActivity.this, "Не удалось зарегистрироваться!", Toast.LENGTH_SHORT).show();
-                if (mode != RegistrationLiveData.DEFAULT_MODE) {
-                    RegistrationLiveData.getInstance().setLiveData(RegistrationLiveData.DEFAULT_MODE);
+                if (mode == RegistrationLiveData.REGISTRATION_SUCCESS) {
+                    loadingActivity();
                     RetrofitTransactions.getInstance().getAllUsers();
                     RetrofitTransactions.getInstance().getSpecificRole("DJ");
                     RetrofitTransactions.getInstance().getSpecificRole("Animator");
                     RetrofitTransactions.getInstance().getSpecificRole("Cooker");
                     RetrofitTransactions.getInstance().getSpecificRole("Dancer");
-                }
-                }
+                    Toast.makeText(RegistrationActivity.this, "Вы зарегистрированы!", Toast.LENGTH_SHORT).show();
+                } else if (mode == RegistrationLiveData.REGISTRATION_FAILURE)
+                    Toast.makeText(RegistrationActivity.this, "Не удалось зарегистрироваться!", Toast.LENGTH_SHORT).show();
+                if (mode != RegistrationLiveData.DEFAULT_MODE)
+                    RegistrationLiveData.getInstance().setLiveData(RegistrationLiveData.DEFAULT_MODE);
+            }
         });
 
         AllPeopleLiveData.getInstance().getLiveData().observe(this, new Observer<Integer>() {
@@ -66,6 +66,13 @@ public class RegistrationActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+        finishActivity(0);
+        finish();
+    }
+
+    public void loadingActivity() {
+        Intent intent = new Intent(this, WaitingActivity.class);
+        startActivityForResult(intent, 0);
     }
 
 
@@ -77,7 +84,9 @@ public class RegistrationActivity extends AppCompatActivity {
         String password = ((EditText) findViewById(R.id.editText_password_registration)).getText().toString();
         String role = ((EditText) findViewById(R.id.editText_role_registration)).getText().toString();
         String username = ((EditText) findViewById(R.id.editText_username_registration)).getText().toString();
-        int price = Integer.valueOf(((EditText) findViewById(R.id.editText_price_registration)).getText().toString());
+        int price = 0;
+        if (!((EditText) findViewById(R.id.editText_price_registration)).getText().toString().isEmpty())
+            price = Integer.valueOf(((EditText) findViewById(R.id.editText_price_registration)).getText().toString());
         String description = ((EditText) findViewById(R.id.editText_desription_registration)).getText().toString();
         double distance = 4000;
 
@@ -89,8 +98,6 @@ public class RegistrationActivity extends AppCompatActivity {
             Toast.makeText(this, "Введите свою роль!", Toast.LENGTH_SHORT);
         else if (username.isEmpty())
             Toast.makeText(this, "Введите имя!", Toast.LENGTH_SHORT);
-        else if (price == 0)
-            Toast.makeText(this, "Введите расценки!", Toast.LENGTH_SHORT);
 
         else {
             HashMap params = new HashMap();

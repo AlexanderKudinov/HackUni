@@ -42,7 +42,7 @@
             android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
-            android:src="@drawable/icon_add_24"
+            android:src="@drawable/icon_add"
             android:clickable="true"/>
     </RelativeLayout>
 
